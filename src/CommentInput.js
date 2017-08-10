@@ -28,7 +28,7 @@ class CommentInput extends Component {
             // 函数的调用- 可以在这个函数里面讲获取的数据进行渲染到需要的子组件上
             this.props.onSubmit({username, content})
         }
-        // 将输入框内容从新清空
+        // 将输入框内容重新清空
         this.setState({
             content: ''
         })
