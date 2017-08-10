@@ -13,3 +13,20 @@ body {
   width: 600px;
   font-size: 14px;
 }
+
+.comment-input {
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #f1f1f1;
+  padding: 20px;
+}
+
+.comment-field, .comment-field-name {
+  display: flex;
+  font-size: 14px;
+  flex-basis: 100px;
+}
+
+.comment-field {
+  margin-bottom: 15px;
+}
