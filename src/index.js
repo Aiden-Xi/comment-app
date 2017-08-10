@@ -12,6 +12,26 @@ class Comment extends Component {
             ]
         }
     }
+
+    handleOnClick() {
+        var name_value = document.getElementById('username').value;
+        var content_value = document.getElementById('content-value').value;
+        
+        if (name_value.length <= 0) {
+            alert('请输入用户名');
+            return;
+        }
+        if (content_value.length <= 0) {
+            alert('内容不能为空');
+            return;
+        }
+        var contents = this.state.contents;
+        contents.push({name: name_value, value: content_value})
+        this.setState({
+            contents: contents
+        })
+    }
+
     render() {
         return(
             <div className="wrapper">
@@ -19,17 +39,17 @@ class Comment extends Component {
                     <div className="comment-field">
                         <span className="comment-field-name">用户名:</span>
                         <div className="comment-field-input">
-                            <input type="text" name="username"/>
+                            <input type="text" name="username" id="username"/>
                         </div>
                     </div>
                     <div className="comment-field">
                         <span className="comment-field-name">评论内容:</span>
                         <div className="comment-field-input">
-                            <textarea name="content"></textarea>
+                            <textarea name="content" id="content-value"></textarea>
                         </div>
                     </div>
                     <div className="comment-field-button">
-                        <button>发布</button>
+                        <button onClick={this.handleOnClick.bind(this)}>发布</button>
                     </div>
                 </div>
                 {/*显示发布的评论*/}
@@ -47,7 +67,7 @@ class Content extends Component {
                 <div className="comment-user">
                     <span>{content.name}</span>
                 </div>
-                <p> ：{content.value}</p>
+                <p>：{content.value}</p>
             </div>
         )
     }
