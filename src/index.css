@@ -89,6 +89,11 @@ body {
   min-height: 40px;
 }
 
+.comment-delete {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .comment .comment-user {
   flex-shrink: 0;
 }
