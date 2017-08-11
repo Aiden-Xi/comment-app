@@ -48,9 +48,12 @@ class CommentInput extends Component {
     handleSubmit() {
         console.log(`是否实现提交方法 = ${this.props.onSubmit}`);
         if (this.props.onSubmit) {
-            const { username, content } = this.state
             // 函数的调用- 可以在这个函数里面讲获取的数据进行渲染到需要的子组件上
-            this.props.onSubmit({username, content})
+            this.props.onSubmit({
+                username: this.state.username,
+                content: this.state.content,
+                createTime: new Date()
+            })
         }
         // 将输入框内容重新清空
         this.setState({
