@@ -1,18 +1,25 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import wrapWithLoadData from './wrapWithLoadData'
 
 class CommentInput extends Component {
-    constructor() {
-        super()
+    static propTypes = {
+        data: PropTypes.any,
+        saveData: PropTypes.func.isRequired,
+        onSubmit: PropTypes.func
+    }
+    constructor(props) {
+        super(props)
         this.state = {
-            username: '',
+            username: props.data,
             content: ''
         }
     }
     /* 组件生命周期 */
     // 数据将要挂起的时候将用户名取出
-    componentWillMount() {
-        this._loadUsername()
-    }
+    // componentWillMount() {
+    //     this._loadUsername()
+    // }
     // 组件挂起之后将内容输入框获取焦点
     componentDidMount() {
         this.textarea.focus()
@@ -20,15 +27,15 @@ class CommentInput extends Component {
 
     /* 私有方法， 都是用 _ 开头 */
     // 取出本地保存的数据
-    _loadUsername() {
-        const username = localStorage.getItem('username')
-        this.setState({ username })
-    }
-
-    // 本地持久化保持数据
-    _saveUsername(username) {
-        localStorage.setItem('username', username)
-    }
+    // _loadUsername() {
+    //     const username = localStorage.getItem('username')
+    //     this.setState({ username })
+    // }
+    //
+    // // 本地持久化保持数据
+    // _saveUsername(username) {
+    //     localStorage.setItem('username', username)
+    // }
 
     /* 事件监听方法 */
     handleUsernameChange(event) {
@@ -38,7 +45,7 @@ class CommentInput extends Component {
     }
     // 输入框失去焦点事件触发
     handleUsernameBlur(event) {
-        this._saveUsername(event.target.value)
+        this.props.saveData(event.target.value)
     }
     handleContentChange(event) {
         this.setState({
@@ -46,13 +53,12 @@ class CommentInput extends Component {
         })
     }
     handleSubmit() {
-        console.log(`是否实现提交方法 = ${this.props.onSubmit}`);
         if (this.props.onSubmit) {
             // 函数的调用- 可以在这个函数里面讲获取的数据进行渲染到需要的子组件上
             this.props.onSubmit({
                 username: this.state.username,
                 content: this.state.content,
-                createTime: new Date()
+                createTime: +new Date()
             })
         }
         // 将输入框内容重新清空
@@ -69,7 +75,7 @@ class CommentInput extends Component {
                     <div className="comment-field-input">
                         <input
                             type="text"
-                            value={this.state.username}
+                            value={this.state.username || ''}
                             onBlur={this.handleUsernameBlur.bind(this)}
                             onChange={this.handleUsernameChange.bind(this)}/>
                     </div>
@@ -92,4 +98,5 @@ class CommentInput extends Component {
     }
 }
 
+CommentInput = wrapWithLoadData(CommentInput, 'username')
 export default CommentInput
